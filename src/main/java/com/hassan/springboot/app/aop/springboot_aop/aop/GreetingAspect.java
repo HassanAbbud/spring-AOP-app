@@ -26,21 +26,21 @@ public class GreetingAspect {
         logger.info("Before " + method + " with arguments " + args);
     }
 
-    //Performs logic after execution of any methods in GreetingService
+    //Performs logic after execution of any methods in GreetingService regardless of errors
     @After("execution(* com.hassan.springboot.app.aop.springboot_aop.services.GreetingService.*(..))")
     public void loggerAfter(JoinPoint joinPoint){
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
         logger.info("After " + method + " with arguments " + args);
     }
-    //Performs logic after execution of any methods in GreetingService
+    //Performs logic after execution of any methods that returned something in GreetingService
     @AfterReturning("execution(* com.hassan.springboot.app.aop.springboot_aop.services.GreetingService.*(..))")
     public void loggerAfterReturning(JoinPoint joinPoint){
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
         logger.info("After returning " + method + " with arguments " + args);
     }
-    //Performs logic after execution of any methods in GreetingService
+    //Performs logic after an error has been thrown in any methods of GreetingService
     @AfterThrowing("execution(* com.hassan.springboot.app.aop.springboot_aop.services.GreetingService.*(..))")
     public void loggerAfterThrowing(JoinPoint joinPoint){
         String method = joinPoint.getSignature().getName();
