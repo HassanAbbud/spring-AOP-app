@@ -10,7 +10,6 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
@@ -23,11 +22,10 @@ public class GreetingAspect {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Pointcut("execution(* com.hassan.springboot.app.aop.springboot_aop.services.GreetingService.*(..))")
-    private void greetingLoggerPointcut(){};
+    
 
     //Performs logic before execution of any methods in GreetingService
-    @Before("greetingLoggerPointcut()")
+    @Before("GreetingServicePointcuts.greetingLoggerPointcut()")
     public void loggerBefore(JoinPoint joinPoint){
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
@@ -35,21 +33,21 @@ public class GreetingAspect {
     }
 
     //Performs logic after execution of any methods in GreetingService regardless of errors
-    @After("greetingLoggerPointcut()")
+    @After("GreetingServicePointcuts.greetingLoggerPointcut()")
     public void loggerAfter(JoinPoint joinPoint){
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
         logger.info("After " + method + " with arguments " + args);
     }
     //Performs logic after execution of any methods that returned something in GreetingService
-    @AfterReturning("greetingLoggerPointcut()")
+    @AfterReturning("GreetingServicePointcuts.greetingLoggerPointcut()")
     public void loggerAfterReturning(JoinPoint joinPoint){
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
         logger.info("After returning " + method + " with arguments " + args);
     }
     //Performs logic after an error has been thrown in any methods of GreetingService
-    @AfterThrowing("greetingLoggerPointcut()")
+    @AfterThrowing("GreetingServicePointcuts.greetingLoggerPointcut()")
     public void loggerAfterThrowing(JoinPoint joinPoint){
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
@@ -57,7 +55,7 @@ public class GreetingAspect {
     }
 
     //Performs logic around the method as its being executed, can execute code before and after
-    @Around("greetingLoggerPointcut()")
+    @Around("GreetingServicePointcuts.greetingLoggerPointcut()")
     public Object loggerAround(ProceedingJoinPoint joinPoint) throws Throwable{
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
